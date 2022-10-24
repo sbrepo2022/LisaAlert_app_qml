@@ -23,7 +23,7 @@ Rectangle {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top
         anchors.topMargin: top_surface.height / 8 / 3
-        text: "Lisa Alert"
+        text: "Rescue Map"
         color: "#fff"
         font.bold: true
         font.pixelSize: mp(4)
@@ -123,7 +123,7 @@ Rectangle {
                     connectionButton.color = "#111";
                 }
                 onClicked: {
-                    appCore.login(tokenEdit.text, nameEdit.text);
+                    appCore.login(tokenEdit.text + tokenEdit.preeditText, nameEdit.text + nameEdit.preeditText);
                 }
             }
         }

@@ -11,6 +11,42 @@ Item {
     }
 
     FastShadow {
+        id: slideButtonShadow
+        anchors.fill: slideButton
+        radius: mp(6)
+        borderRadius: mp(3)
+        color: "#aaa"
+    }
+
+    Rectangle {
+        id: slideButton
+        anchors.top: parent.top
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.topMargin: mp(2)
+        width: slideText.width
+        height: slideText.height
+        radius: mp(3)
+        color: "#fff"
+
+        Text {
+            id: slideText
+            text: "Настройки"
+            font.pixelSize: mp(3)
+            font.family: "Montserrat"
+            color: "#000"
+            padding: parent.radius
+        }
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                topRect.dDuration = topRect.fDuration;
+                topRect.state = "opened";
+            }
+        }
+    }
+
+    FastShadow {
         id: topRectShadow
         anchors.fill: topRect
         radius: mp(6)
@@ -26,7 +62,7 @@ Item {
         anchors.left: parent.left
         anchors.right: parent.right
         x: 0
-        y: top_surface.y - widgetContent.height + yOffset
+        y: top_surface.y - topRect.height + yOffset
         height: widgetContent.height + slider.height
         color: "#fff"
         radius: mp(3)
@@ -45,7 +81,7 @@ Item {
                 name: "opened"
                 PropertyChanges {
                     target: topRect
-                    yOffset: widgetContent.height
+                    yOffset: topRect.height
                 }
             }
         ]
@@ -123,15 +159,25 @@ Item {
                 height: findPlaceEdit.height * 1.2
 
                 CheckButton {
+                    id: tracks_layer_button;
                     x: parent.width / 3 * 0
                     y: 0
                     height: parent.height
                     width: parent.width / 3
                     imgSource: "qrc:/textures/tracks_layer_off.svg"
                     imgAltSource: "qrc:/textures/tracks_layer_on.svg"
+
+                    onChecked: {
+                        sessionData.setTracksVisible(true);
+                    }
+
+                    onUnchecked: {
+                        sessionData.setTracksVisible(false);
+                    }
                 }
 
                 CheckButton {
+                    id: markers_layer_button;
                     x: parent.width / 3 * 1
                     y: 0
                     height: parent.height
@@ -141,6 +187,7 @@ Item {
                 }
 
                 CheckButton {
+                    id: search_layer_button;
                     x: parent.width / 3 * 2
                     y: 0
                     height: parent.height
@@ -182,17 +229,17 @@ Item {
                     slider.lastPosY = newYPosition;
 
                     if (topRect.yOffset < 0) topRect.yOffset = 0;
-                    if (topRect.yOffset > widgetContent.height) topRect.yOffset = widgetContent.height;
+                    if (topRect.yOffset > topRect.height) topRect.yOffset = topRect.height;
                 }
 
                 onReleased: {
                     if (slider.kinetic > 0) {
-                        topRect.dDuration = (widgetContent.height - topRect.yOffset) / widgetContent.height * topRect.fDuration;
+                        topRect.dDuration = (topRect.height - topRect.yOffset) / topRect.height * topRect.fDuration;
                         topRect.state = "closed";
                         topRect.state = "opened";
                     }
                     else if (slider.kinetic < 0) {
-                        topRect.dDuration = topRect.yOffset / widgetContent.height * topRect.fDuration;
+                        topRect.dDuration = topRect.yOffset / topRect.height * topRect.fDuration;
                         topRect.state = "opened";
                         topRect.state = "closed";
                     }

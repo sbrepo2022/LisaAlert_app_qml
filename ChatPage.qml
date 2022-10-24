@@ -7,6 +7,7 @@ Item {
     property Item background
     property Item mask
     property Item swipeView
+    property int messagesNotSeen: 0 // дописать определение того, что сообщение было просмотрено
     id: top_surface
     clip: true
 
@@ -28,6 +29,7 @@ Item {
                 senderName: "Серей Борисов"
                 sendingTime: "23:58"
                 messageText: "Скоро будут настройки"
+                hadSeen: false
             }
             ListElement {
                 isMyMessage: true
@@ -35,28 +37,8 @@ Item {
                 senderName: "Серей Борисов"
                 sendingTime: "23:58"
                 messageText: "Поддерживаю идею разработчика Александра"
+                hadSeen: false
             }*/
-            ListElement {
-                isMyMessage: false
-                senderID: 2
-                senderName: "Александр Шибаев"
-                sendingTime: "24:01"
-                messageText: "Щеп"
-            }
-            ListElement {
-                isMyMessage: false
-                senderID: 3
-                senderName: "Федор Солдаткин"
-                sendingTime: "23:56"
-                messageText: "Я, как Project Manager, настаиваю на ускорении работы!!! Вам ли не знать что наша транснациональная межконтинентальная монополистическая корпорация GEOSAS™ inc. © 2019 All rights reserved® (ЛИЦЕНЗИЯ №1 от 11.01.2019) растет с экспотенциальным ускорением!!! Кстати, хорошая новость, в этом месяце премий не будет."
-            }
-            ListElement {
-                isMyMessage: true
-                senderID: 1
-                senderName: "Серей Борисов"
-                sendingTime: "23:55"
-                messageText: "Здравствуйте. Поздравляю с новой версией интерфейса командного чата!"
-            }
         }
 
         ListView {
@@ -68,6 +50,41 @@ Item {
             anchors.left: parent.left
             anchors.right: parent.right
             //anchors.topMargin: parent.height * 0.21
+
+            Timer {
+                interval: 500
+                running: true
+                repeat: true
+                onTriggered: {
+                    if (msgListView.visibleArea.yPosition * msgListView.contentHeight < msgListView.height) {
+                        sessionData.getPreviousMessages();
+                    }
+
+                    if (msgListView.contentHeight - (msgListView.visibleArea.yPosition + msgListView.visibleArea.heightRatio) * msgListView.contentHeight < msgListView.height) {
+                        sessionData.getNextMessages();
+                    }
+                }
+            }
+
+            Connections {
+                target: sessionData
+
+                onPrependMessage: {
+                    messagesModel.insert(0, JSON.parse(element));
+                }
+
+                onAppendMessage: {
+                    messagesModel.append(JSON.parse(element));
+                    top_surface.messagesNotSeen += 1;
+                }
+
+                onUpdatedName: {
+                    for (var i = 0; i < messagesModel.count; i++) {
+                        if (messagesModel.get(i).isMyMessage === true)
+                            messagesModel.setProperty(i, "senderName", name);
+                    }
+                }
+            }
 
             header: Rectangle {
                 width: parent.width
@@ -92,6 +109,7 @@ Item {
             model: messagesModel
             delegate: Component {
                 id: messageDelegateComponent
+
                 Item {
                     property int heightMargin: mp(2) + mp(4)
                     id: topMsgItem
@@ -111,8 +129,10 @@ Item {
                         font.family: "Montserrat"
                         color: "#ccc"
                         Component.onCompleted: {
+                            var dateTime1 = Date.parse(sendingTime);
+                            var dateTime2 = Date.parse(messagesModel.get(index + 1).sendingTime);
                             if (index < messagesModel.count - 1)
-                                if (messagesModel.get(index + 1).senderID === senderID) {
+                                if (messagesModel.get(index + 1).senderID === senderID  && dateTime1 - dateTime2 < 60000) {
                                     nameText.anchors.topMargin = 0;
                                     nameText.height = 0;
                                     nameText.opacity = 0.0;
@@ -150,7 +170,15 @@ Item {
                         anchors.right: parent.right
                         anchors.topMargin: mp(4)
                         anchors.rightMargin: mp(4)
-                        text: sendingTime
+                        text: {
+                            var curTime = new Date().getTime();
+                            if (curTime - Date.parse(sendingTime) > 24 * 60 * 60 * 1000) {
+                                return sendingTime.split('T')[0].split('-')[1] + "." + sendingTime.split('T')[0].split('-')[2];
+                            }
+                            else {
+                                return sendingTime.split('T')[1].split(':')[0] + ":" + sendingTime.split('T')[1].split(':')[1];
+                            }
+                        }
                         font.pixelSize: topRect.textSize
                         font.family: "Montserrat"
                         color: "#ccc"
@@ -263,8 +291,12 @@ Item {
                 padding: mp(4)
                 selectByMouse: true
 
+                onPreeditTextChanged: {
+                    (text === "" && preeditText.length == 0) ? sendButton.yOffset = 0 : sendButton.yOffset = -sendButton.height;
+                }
+
                 onTextChanged: {
-                    text === "" ? sendButton.yOffset = 0 : sendButton.yOffset = -sendButton.height;
+                    (text === "" && preeditText.length == 0) ? sendButton.yOffset = 0 : sendButton.yOffset = -sendButton.height;
                 }
             }
 
@@ -292,11 +324,13 @@ Item {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        messagesModel.insert(0, {"isMyMessage": true,
+                        /*messagesModel.insert(0, {"isMyMessage": true,
                                                  "senderID": 1,
                                                  "senderName": "Серей Борисов",
                                                  "sendingTime": Qt.formatDateTime(new Date(), "h:m"),
-                                                 "messageText": msgEditLine.text});
+                                                 "messageText": msgEditLine.text});*/
+                        sessionData.addMessageToStack(msgEditLine.text + msgEditLine.preeditText);
+                        msgEditLine.text = " ";
                         msgEditLine.text = "";
                     }
                 }

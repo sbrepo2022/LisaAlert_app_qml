@@ -1,0 +1,38 @@
+void AppCore::onConnectAction(QNetworkReply *reply) {
+    int status_code;
+    QString result;
+    if(reply->error()){
+
+    }
+    else {
+        status_code = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+
+        QJsonDocument document;
+        QJsonObject root;
+        result = reply->readAll();
+        document = QJsonDocument::fromJson(result.toUtf8());
+        switch (status_code) {
+            case 201:
+                if (document.isObject()) {
+
+                }
+                break;
+
+            case 400:
+
+                break;
+
+            case 404:
+
+                break;
+
+            case 500:
+
+                break;
+        }
+    }
+    QNetworkAccessManager *http_manager = dynamic_cast<QNetworkAccessManager*>(QObject::sender());
+    disconnect(http_manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(onConnectAction(QNetworkReply*)));
+    http_manager->deleteLater();
+    reply->deleteLater();
+}

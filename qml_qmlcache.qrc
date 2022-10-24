@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<RCC>
+    <qresource prefix="/">
+        <file alias="textures/background.svg">textures/background.svg</file>
+        <file alias="textures/background2.svg">textures/background2.svg</file>
+        <file alias="textures/photo.svg">textures/photo.svg</file>
+        <file alias="fonts/Montserrat-Black.ttf">fonts/Montserrat-Black.ttf</file>
+        <file alias="fonts/Montserrat-BlackItalic.ttf">fonts/Montserrat-BlackItalic.ttf</file>
+        <file alias="fonts/Montserrat-Bold.ttf">fonts/Montserrat-Bold.ttf</file>
+        <file alias="fonts/Montserrat-BoldItalic.ttf">fonts/Montserrat-BoldItalic.ttf</file>
+        <file alias="fonts/Montserrat-ExtraBold.ttf">fonts/Montserrat-ExtraBold.ttf</file>
+        <file alias="fonts/Montserrat-ExtraBoldItalic.ttf">fonts/Montserrat-ExtraBoldItalic.ttf</file>
+        <file alias="fonts/Montserrat-ExtraLight.ttf">fonts/Montserrat-ExtraLight.ttf</file>
+        <file alias="fonts/Montserrat-ExtraLightItalic.ttf">fonts/Montserrat-ExtraLightItalic.ttf</file>
+        <file alias="fonts/Montserrat-Italic.ttf">fonts/Montserrat-Italic.ttf</file>
+        <file alias="fonts/Montserrat-Light.ttf">fonts/Montserrat-Light.ttf</file>
+        <file alias="fonts/Montserrat-LightItalic.ttf">fonts/Montserrat-LightItalic.ttf</file>
+        <file alias="fonts/Montserrat-Medium.ttf">fonts/Montserrat-Medium.ttf</file>
+        <file alias="fonts/Montserrat-MediumItalic.ttf">fonts/Montserrat-MediumItalic.ttf</file>
+        <file alias="fonts/Montserrat-Regular.ttf">fonts/Montserrat-Regular.ttf</file>
+        <file alias="fonts/Montserrat-SemiBold.ttf">fonts/Montserrat-SemiBold.ttf</file>
+        <file alias="fonts/Montserrat-SemiBoldItalic.ttf">fonts/Montserrat-SemiBoldItalic.ttf</file>
+        <file alias="fonts/Montserrat-Thin.ttf">fonts/Montserrat-Thin.ttf</file>
+        <file alias="fonts/Montserrat-ThinItalic.ttf">fonts/Montserrat-ThinItalic.ttf</file>
+        <file alias="textures/info.svg">textures/info.svg</file>
+        <file alias="textures/message.svg">textures/message.svg</file>
+        <file alias="textures/navigation.svg">textures/navigation.svg</file>
+        <file alias="textures/settings.svg">textures/settings.svg</file>
+        <file alias="textures/send.svg">textures/send.svg</file>
+        <file alias="textures/markers_layer_off.svg">textures/markers_layer_off.svg</file>
+        <file alias="textures/markers_layer_on.svg">textures/markers_layer_on.svg</file>
+        <file alias="textures/search_areas_layer_off.svg">textures/search_areas_layer_off.svg</file>
+        <file alias="textures/search_areas_layer_on.svg">textures/search_areas_layer_on.svg</file>
+        <file alias="textures/tracks_layer_off.svg">textures/tracks_layer_off.svg</file>
+        <file alias="textures/tracks_layer_on.svg">textures/tracks_layer_on.svg</file>
+        <file alias="textures/search.svg">textures/search.svg</file>
+        <file alias="textures/background_mask.svg">textures/background_mask.svg</file>
+        <file alias="textures/tracking_off.svg">textures/tracking_off.svg</file>
+        <file alias="textures/tracking_on.svg">textures/tracking_on.svg</file>
+        <file alias="textures/done.svg">textures/done.svg</file>
+        <file alias="textures/done2.svg">textures/done2.svg</file>
+    </qresource>
+</RCC>

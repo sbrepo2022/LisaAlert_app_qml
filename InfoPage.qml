@@ -4,7 +4,6 @@ import QtQuick.Controls 2.4
 import QtGraphicalEffects 1.12
 
 Item {
-    signal logout
     property Item background
     property Item mask
     property Item swipeView
@@ -16,18 +15,18 @@ Item {
     }
 
     Connections {
-        target: appCore
+        target: sessionData
 
-        onTokenChanged: {
-            infoModel[0].fieldValue = token;
+        onUpdatedToken: {
+            infoModel.set(0, {"fieldValue":token});
         }
 
-        onNameChanged: {
-            infoModel[1].fieldValue = hunter_id;
+        onUpdatedHunterId: {
+            infoModel.set(1, {"fieldValue":hunter_id});
         }
 
-        onHunterIdChanged: {
-            infoModel[2].fieldValue = name;
+        onUpdatedName: {
+            infoModel.set(2, {"fieldValue":name});
         }
     }
 
@@ -139,7 +138,7 @@ Item {
                         anchors.topMargin: mp(4)
                         anchors.left: parent.left
                         anchors.right: parent.right
-                        text: "Lisa Alert v2.0 (alpha)"
+                        text: "Rescue Map v2.0 (alpha)"
                         horizontalAlignment: Text.AlignHCenter
                         color: "#000"
                         font.pixelSize: mp(3)

@@ -10,6 +10,7 @@ Item {
     property int radius: 0
     property int textSize: 20
     property alias text: tokenText.text
+    property alias preeditText: tokenText.preeditText
     signal takePhoto
 
     id: topRect

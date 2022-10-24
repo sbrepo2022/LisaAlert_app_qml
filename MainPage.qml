@@ -11,6 +11,10 @@ Rectangle {
         return Screen.pixelDensity * x;
     }
 
+    Component.onCompleted: {
+        sessionData.initSessionInterface();
+    }
+
     Rectangle {
         id: background_rect
         anchors.fill: parent

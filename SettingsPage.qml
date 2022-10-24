@@ -14,6 +14,14 @@ Item {
         return Screen.pixelDensity * x;
     }
 
+    Connections {
+        target: sessionData
+
+        onUpdatedName: {
+            nameEdit.text = name;
+        }
+    }
+
     Rectangle {
         id: topRect
         anchors.fill: parent
@@ -40,6 +48,13 @@ Item {
                     height: width
                     imgSource: "qrc:/textures/tracking_off.svg"
                     imgAltSource: "qrc:/textures/tracking_on.svg"
+                    isChecked: false
+                    onChecked: {
+                        sessionData.setGeoSourceState(true);
+                    }
+                    onUnchecked: {
+                        sessionData.setGeoSourceState(false);
+                    }
                 }
 
                 FastShadow {
@@ -128,7 +143,7 @@ Item {
                     }
 
                     ChangeText {
-                        id: tokenEdit
+                        id: nameEdit
                         anchors.horizontalCenter: parent.horizontalCenter
                         anchors.top: parent.children[6].bottom
                         anchors.topMargin: mp(4)
@@ -136,6 +151,9 @@ Item {
                         radius: mp(3)
                         textSize: mp(3)
                         placeholderText: "Введите имя..."
+                        onChangeName: {
+                            sessionData.changeNameAction(nameEdit.text + nameEdit.preeditText);
+                        }
                     }
 
                     Text {

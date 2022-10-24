@@ -9,6 +9,7 @@ Item {
     signal unchecked
     property string imgSource
     property string imgAltSource
+    property bool isChecked: true
 
     FastShadow {
         id: checkButtonShadow
@@ -22,13 +23,11 @@ Item {
     Rectangle {
         id: checkButton
 
-        property bool isChecked: true
-
         anchors.centerIn: parent
         height: parent.height < parent.width ? parent.height : parent.width
         width: height
         radius: height / 2
-        color: checkButton.isChecked ? "#3696de" : "#fff"
+        color: top_surface.isChecked ? "#3696de" : "#fff"
 
         Behavior on color {
             ColorAnimation {duration: 300;}
@@ -36,7 +35,7 @@ Item {
 
         Image {
             anchors.fill: parent
-            source: checkButton.isChecked ? imgAltSource : imgSource
+            source: top_surface.isChecked ? imgAltSource : imgSource
             sourceSize: Qt.size(width, height)
             smooth: true
         }
@@ -44,8 +43,8 @@ Item {
         MouseArea {
             anchors.fill: parent
             onClicked: {
-                checkButton.isChecked = ! checkButton.isChecked;
-                checkButton.isChecked ? top_surface.checked : top_surface.unchecked;
+                top_surface.isChecked = ! top_surface.isChecked;
+                top_surface.isChecked ? top_surface.checked() : top_surface.unchecked();
             }
         }
     }

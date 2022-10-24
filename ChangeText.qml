@@ -10,6 +10,7 @@ Item {
     property int radius: 0
     property int textSize: 20
     property alias text: tokenText.text
+    property alias preeditText: tokenText.preeditText
     property alias placeholderText: tokenText.placeholderText
     signal changeName
 

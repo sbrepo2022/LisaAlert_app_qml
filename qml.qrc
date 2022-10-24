@@ -53,5 +53,6 @@
         <file>InfoPage.qml</file>
         <file>ChangeText.qml</file>
         <file>textures/done2.svg</file>
+        <file>maplogic.js</file>
     </qresource>
 </RCC>

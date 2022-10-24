@@ -13,6 +13,7 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine;
     AppCore *app_core = new AppCore();
+    app_core->setEngine(&engine);
     QQmlContext *context = engine.rootContext();
     context->setContextProperty("appCore", app_core);
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));

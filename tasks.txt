@@ -1,0 +1,7 @@
+файл: https://github.com/GarageGames/Qt/blob/master/qt-5/qtlocation/src/imports/location/qdeclarativepolylinemapitem.cpp
+строка: 768-769
+
+задача: добавить fill_material_.setFlag(QSGMaterial::Blending, true);
+
+описание:
+при инициализации MapPolylineNode необходимо добавить флаг, отвечающий за смешивание цвета при отрисовке линий на карте.

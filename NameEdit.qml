@@ -6,6 +6,7 @@ Item {
     property int radius: 0
     property int textSize: 20
     property alias text: nameText.text
+    property alias preeditText: nameText.preeditText
 
     function mp(x) {
         return Screen.pixelDensity * x;

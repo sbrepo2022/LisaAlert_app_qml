@@ -1,5 +1,5 @@
-QT += quick svg xml
-CONFIG += c++11
+QT += qml quick svg xml positioning location network
+CONFIG += c++11 qtquickcompiler
 
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
@@ -14,7 +14,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-    appcore.cpp
+        appcore.cpp
 
 RESOURCES += qml.qrc
 
